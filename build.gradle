@@ -16,10 +16,27 @@ repositories {
 }
 
 dependencies {
+	implementation "io.jsonwebtoken:jjwt:0.9.1"
+	// jwt
+	implementation group: 'io.jsonwebtoken', name: 'jjwt-api', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-impl', version: '0.11.2'
+	runtimeOnly group: 'io.jsonwebtoken', name: 'jjwt-jackson', version: '0.11.2'
+
+	// jpa
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-jdbc'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// db
 	runtimeOnly 'com.mysql:mysql-connector-j'
+	runtimeOnly 'com.h2database:h2'
+
+	// web
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+
+	// validation
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	implementation 'javax.xml.bind:jaxb-api:2.3.1'
+	implementation 'javax.servlet:javax.servlet-api:4.0.1'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	compileOnly('org.projectlombok:lombok')
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
