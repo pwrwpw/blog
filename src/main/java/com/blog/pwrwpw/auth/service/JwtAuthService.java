@@ -29,7 +29,6 @@ public class JwtAuthService implements AuthService{
         registerIfNotExists(memberRequest);
         Member member = memberRepository.findByEmail(memberRequest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-
         return jwtTokenProvider.createAccessToken(member.getEmail());
     }
 

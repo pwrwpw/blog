@@ -1,6 +1,7 @@
 package com.blog.pwrwpw.auth.login;
 
 import com.blog.pwrwpw.auth.service.JwtAuthService;
+import com.blog.pwrwpw.member.domain.Member;
 import java.util.Objects;
 import org.springframework.core.MethodParameter;
 import org.springframework.web.bind.support.WebDataBinderFactory;
@@ -13,7 +14,7 @@ public class JwtLoginResolver implements HandlerMethodArgumentResolver {
     private static final String SEPARATOR = " ";
     private static final int BEARER_INDEX = 0;
     private static final int PAYLOAD_INDEX = 1;
-    private static final  String BEARER = "Bearer";
+    private static final String BEARER = "Bearer";
 
     private final JwtAuthService jwtAuthService;
 
@@ -26,10 +27,11 @@ public class JwtLoginResolver implements HandlerMethodArgumentResolver {
     }
 
     @Override
-    public Object resolveArgument(final MethodParameter parameter, final ModelAndViewContainer mavContainer,
+    public Member resolveArgument(final MethodParameter parameter, final ModelAndViewContainer mavContainer,
                                   final NativeWebRequest webRequest, final WebDataBinderFactory binderFactory) {
         String authorization = webRequest.getHeader("Authorization");
         validateAuthorization(authorization);
+        System.out.println("authorization = " + authorization);
         return jwtAuthService.findMemberByJwtPayload(getPayload(Objects.requireNonNull(authorization)));
     }
 
