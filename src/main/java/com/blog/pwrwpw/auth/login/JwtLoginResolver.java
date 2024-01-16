@@ -31,7 +31,6 @@ public class JwtLoginResolver implements HandlerMethodArgumentResolver {
                                   final NativeWebRequest webRequest, final WebDataBinderFactory binderFactory) {
         String authorization = webRequest.getHeader("Authorization");
         validateAuthorization(authorization);
-        System.out.println("authorization = " + authorization);
         return jwtAuthService.findMemberByJwtPayload(getPayload(Objects.requireNonNull(authorization)));
     }
 
