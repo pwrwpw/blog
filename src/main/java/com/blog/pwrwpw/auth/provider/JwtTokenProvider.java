@@ -3,13 +3,11 @@ package com.blog.pwrwpw.auth.provider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
-import io.jsonwebtoken.io.Decoders;
-import io.jsonwebtoken.security.Keys;
-import java.security.Key;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
@@ -55,7 +53,11 @@ public class JwtTokenProvider {
     }
 
     public String getPayload(final String token) {
-        return Jwts.parser().setSigningKey(key).parseClaimsJws(token).getBody().getSubject();
+        JwtParser parser = Jwts.parser().setSigningKey(key);
+        Jws<Claims> claimsJws = parser.parseClaimsJws(token);
+        Claims body = claimsJws.getBody();
+
+        return body.get("id", String.class);
     }
 
     public boolean validateToken(String token) {
