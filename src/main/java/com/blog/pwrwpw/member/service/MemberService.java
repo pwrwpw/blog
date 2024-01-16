@@ -2,6 +2,7 @@ package com.blog.pwrwpw.member.service;
 
 import com.blog.pwrwpw.member.domain.Member;
 import com.blog.pwrwpw.member.dto.ChangePasswordRequest;
+import com.blog.pwrwpw.member.exception.exceptions.NewPasswordNotMatchException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,7 +23,7 @@ public class MemberService {
         String newPasswordConfirm = changePasswordRequest.getNewPasswordConfirm();
 
         if (!newPassword.equals(newPasswordConfirm)) {
-            throw new IllegalArgumentException("새 비밀번호가 일치하지 않습니다.");
+            throw new NewPasswordNotMatchException();
         }
     }
 }

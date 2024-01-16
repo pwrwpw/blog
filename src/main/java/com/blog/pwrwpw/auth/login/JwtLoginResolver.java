@@ -1,5 +1,6 @@
 package com.blog.pwrwpw.auth.login;
 
+import com.blog.pwrwpw.auth.exception.exceptions.BearerTokenNotFoundException;
 import com.blog.pwrwpw.auth.service.JwtAuthService;
 import com.blog.pwrwpw.member.domain.Member;
 import java.util.Objects;
@@ -36,7 +37,7 @@ public class JwtLoginResolver implements HandlerMethodArgumentResolver {
 
     private void validateAuthorization(final String authorization) {
         if (authorization == null || !isBearer(authorization)) {
-            throw new IllegalArgumentException("올바른 인증 정보가 아닙니다.");
+            throw new BearerTokenNotFoundException();
         }
     }
 

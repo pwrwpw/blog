@@ -25,14 +25,14 @@ public class AuthController {
         this.authService = authService;
     }
 
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<MemberResponse> signup(@RequestBody @Valid final MemberRequest memberRequest) {
         Member registeredMember = authService.register(memberRequest);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(MemberResponse.from(registeredMember));
     }
 
-    @PostMapping("/signin")
+    @PostMapping("/sign-in")
     public ResponseEntity<TokenResponse> signin(@RequestBody @Valid final MemberRequest memberRequest) {
         String accessToken = authService.login(memberRequest);
         return ResponseEntity.ok(TokenResponse.from(accessToken));

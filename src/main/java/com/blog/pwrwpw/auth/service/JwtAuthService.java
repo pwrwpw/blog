@@ -4,6 +4,9 @@ import com.blog.pwrwpw.auth.provider.JwtTokenProvider;
 import com.blog.pwrwpw.member.domain.Member;
 import com.blog.pwrwpw.member.domain.MemberRepository;
 import com.blog.pwrwpw.member.dto.MemberRequest;
+import com.blog.pwrwpw.member.exception.exceptions.EmailAlreadyExistsException;
+import com.blog.pwrwpw.member.exception.exceptions.MemberNotEqualException;
+import com.blog.pwrwpw.member.exception.exceptions.MemberNotFoundException;
 import jakarta.annotation.PostConstruct;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
@@ -30,7 +33,7 @@ public class JwtAuthService implements AuthService {
         registerIfNotExists(memberRequest);
 
         Member member = memberRepository.findByEmail(memberRequest.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+                .orElseThrow(MemberNotEqualException::new);
         member.validateEmail(memberRequest.getEmail());
         member.validatePassword(memberRequest.getPassword());
         return jwtTokenProvider.create(member.getEmail());
@@ -46,12 +49,12 @@ public class JwtAuthService implements AuthService {
     public Member findMemberByJwtPayload(final String payload) {
         String jwtPayloadEmail = jwtTokenProvider.getPayload(payload);
         return memberRepository.findByEmail(jwtPayloadEmail)
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+                .orElseThrow(MemberNotFoundException::new);
     }
 
     private void validateEmail(final String email) {
         if (memberRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("이미 사용중인 이메일입니다.");
+            throw new EmailAlreadyExistsException();
         }
     }
 }

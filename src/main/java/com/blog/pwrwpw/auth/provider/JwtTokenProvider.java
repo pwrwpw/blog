@@ -3,6 +3,7 @@ package com.blog.pwrwpw.auth.provider;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jws;
+import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.JwtParser;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -66,14 +67,8 @@ public class JwtTokenProvider {
                     .setSigningKey(key)
                     .parseClaimsJws(token);
             return !claims.getBody().getExpiration().before(new Date());
-        } catch (IllegalArgumentException e) {
-            throw new IllegalArgumentException("JWT 토큰이 잘못되었습니다.");
-        } catch (ExpiredJwtException e) {
-            throw new IllegalArgumentException("토큰이 만료되었습니다.");
-        } catch (UnsupportedJwtException e) {
-            throw new IllegalArgumentException("지원되지 않는 토큰 형식입니다.");
-        } catch (SignatureException e) {
-            throw new IllegalArgumentException("토큰 서명이 올바르지 않습니다.");
+        } catch (JwtException | IllegalArgumentException e) {
+            return false;
         }
     }
 }

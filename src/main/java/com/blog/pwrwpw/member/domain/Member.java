@@ -1,5 +1,9 @@
 package com.blog.pwrwpw.member.domain;
 
+import com.blog.pwrwpw.member.exception.exceptions.AuthInvalidEmailException;
+import com.blog.pwrwpw.member.exception.exceptions.AuthInvalidPasswordException;
+import com.blog.pwrwpw.member.exception.exceptions.EmailFormatException;
+import com.blog.pwrwpw.member.exception.exceptions.MemberPasswordEmptyException;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -40,11 +44,11 @@ public class Member {
 
     private static void validateCreateMember(final String email, final String password) {
         if (!isEmailFormat(email)) {
-            throw new IllegalArgumentException("올바른 이메일 형식이 아닙니다.");
+            throw new EmailFormatException();
         }
 
         if (isEmpty(password)) {
-            throw new IllegalArgumentException("비밀번호는 필수 입력값입니다.");
+            throw new MemberPasswordEmptyException();
         }
     }
 
@@ -58,13 +62,13 @@ public class Member {
 
     public void validatePassword(final String password) {
         if (!this.password.equals(password)) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new AuthInvalidPasswordException();
         }
     }
 
     public void validateEmail(final String email) {
         if (!this.email.equals(email)) {
-            throw new IllegalArgumentException("이메일이 일치하지 않습니다.");
+            throw new AuthInvalidEmailException();
         }
     }
 
