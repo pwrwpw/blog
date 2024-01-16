@@ -1,6 +1,7 @@
 package com.blog.pwrwpw.auth.login;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
@@ -53,10 +54,11 @@ public class JwtLoginResolverTest {
 
     @DisplayName("잘못된 토큰으로 접근 시, 예외 발생")
     @Test
-    void throw_exception_when_invalid_token() throws Exception {
-        // when
-        // then
-        assertThat(jwtLoginResolver.resolveArgument(methodParameter, modelAndViewContainer, webRequest, webDataBinderFactory))
-                .isInstanceOf(IllegalArgumentException.class);
+    void throw_exception_when_invalid_token() {
+
+        assertThatThrownBy(() -> {
+            jwtLoginResolver.resolveArgument(methodParameter, modelAndViewContainer, webRequest, webDataBinderFactory);
+        }).isInstanceOf(IllegalArgumentException.class)
+            .hasMessage("올바른 인증 정보가 아닙니다.");
     }
 }

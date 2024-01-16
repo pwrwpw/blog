@@ -39,32 +39,37 @@ public class Member {
     }
 
     private static void validateCreateMember(final String email, final String password) {
-        validateEmail(email);
-        validatePassword(password);
-    }
-
-    private static boolean isEmailFormat(final String email) {
-        return Pattern.matches("^[_a-zA-Z0-9-\\.]+@[\\.a-zA-Z0-9-]+\\.[a-zA-Z]+$", email);
-    }
-
-    private static void validateEmail(final String email) {
-        if (email == null || email.isEmpty()) {
-            throw new IllegalArgumentException("이메일은 필수 입력값입니다.");
-        }
         if (!isEmailFormat(email)) {
-            throw new IllegalArgumentException("이메일 형식이 올바르지 않습니다.");
+            throw new IllegalArgumentException("올바른 이메일 형식이 아닙니다.");
         }
-    }
 
-    private static void validatePassword(final String password) {
-        if (password == null || password.isEmpty()) {
+        if (isEmpty(password)) {
             throw new IllegalArgumentException("비밀번호는 필수 입력값입니다.");
         }
     }
 
-    public void changePassword(final String password) {
-        validatePassword(password);
-        this.password = password;
+    private static boolean isEmailFormat(final String email) {
+        return Pattern.matches("^[_a-z0-9-]+(.[_a-z0-9-]+)*@(?:\\w+\\.)+\\w+$", email);
+    }
+
+    private static boolean isEmpty(final String password) {
+        return password == null || password.isBlank();
+    }
+
+    public void validatePassword(final String password) {
+        if (!this.password.equals(password)) {
+            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    public void validateEmail(final String email) {
+        if (!this.email.equals(email)) {
+            throw new IllegalArgumentException("이메일이 일치하지 않습니다.");
+        }
+    }
+
+    public void changePassword(final String newPassword) {
+        this.password = newPassword;
     }
 
     public Long getId() {
@@ -87,7 +92,7 @@ public class Member {
         if (!(o instanceof Member)) {
             return false;
         }
-        final Member member = (Member) o;
+        Member member = (Member) o;
 
         return Objects.equals(id, member.id);
     }

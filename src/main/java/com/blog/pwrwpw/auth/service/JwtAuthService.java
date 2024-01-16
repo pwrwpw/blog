@@ -4,11 +4,12 @@ import com.blog.pwrwpw.auth.provider.JwtTokenProvider;
 import com.blog.pwrwpw.member.domain.Member;
 import com.blog.pwrwpw.member.domain.MemberRepository;
 import com.blog.pwrwpw.member.dto.MemberRequest;
+import jakarta.annotation.PostConstruct;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
 @Service
-public class JwtAuthService implements AuthService{
+public class JwtAuthService implements AuthService {
 
     private final MemberRepository memberRepository;
     private final JwtTokenProvider jwtTokenProvider;
@@ -27,9 +28,12 @@ public class JwtAuthService implements AuthService{
     @Transactional
     public String login(MemberRequest memberRequest) {
         registerIfNotExists(memberRequest);
+
         Member member = memberRepository.findByEmail(memberRequest.getEmail())
                 .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
-        return jwtTokenProvider.createAccessToken(member.getEmail());
+        member.validateEmail(memberRequest.getEmail());
+        member.validatePassword(memberRequest.getPassword());
+        return jwtTokenProvider.create(member.getEmail());
     }
 
     private void registerIfNotExists(final MemberRequest memberRequest) {

@@ -37,3 +37,6 @@ replay_pid*
 
 # property files
 *.properties
+
+# http private env files
+http-client.private.env.json

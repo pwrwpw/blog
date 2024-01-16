@@ -2,7 +2,7 @@ package com.blog.pwrwpw.auth.dto;
 
 public class TokenResponse {
 
-    private String accessToken;
+    private final String accessToken;
 
     private TokenResponse(final String accessToken) {
         this.accessToken = accessToken;
