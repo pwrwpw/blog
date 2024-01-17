@@ -7,7 +7,6 @@ import com.blog.pwrwpw.member.dto.MemberRequest;
 import com.blog.pwrwpw.member.exception.exceptions.EmailAlreadyExistsException;
 import com.blog.pwrwpw.member.exception.exceptions.MemberNotEqualException;
 import com.blog.pwrwpw.member.exception.exceptions.MemberNotFoundException;
-import jakarta.annotation.PostConstruct;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.stereotype.Service;
 
@@ -33,7 +32,7 @@ public class JwtAuthService implements AuthService {
         registerIfNotExists(memberRequest);
 
         Member member = memberRepository.findByEmail(memberRequest.getEmail())
-                .orElseThrow(MemberNotEqualException::new);
+                .orElseThrow(MemberNotFoundException::new);
         member.validateEmail(memberRequest.getEmail());
         member.validatePassword(memberRequest.getPassword());
         return jwtTokenProvider.create(member.getEmail());
@@ -49,7 +48,7 @@ public class JwtAuthService implements AuthService {
     public Member findMemberByJwtPayload(final String payload) {
         String jwtPayloadEmail = jwtTokenProvider.getPayload(payload);
         return memberRepository.findByEmail(jwtPayloadEmail)
-                .orElseThrow(MemberNotFoundException::new);
+                .orElseThrow(MemberNotEqualException::new);
     }
 
     private void validateEmail(final String email) {
