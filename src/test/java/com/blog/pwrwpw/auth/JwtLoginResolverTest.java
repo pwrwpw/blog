@@ -1,4 +1,4 @@
-package com.blog.pwrwpw.auth.login;
+package com.blog.pwrwpw.auth;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -6,6 +6,7 @@ import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.mock;
 
 import com.blog.pwrwpw.auth.exception.exceptions.BearerTokenNotFoundException;
+import com.blog.pwrwpw.auth.login.JwtLoginResolver;
 import com.blog.pwrwpw.auth.service.JwtAuthService;
 import com.blog.pwrwpw.member.domain.Member;
 import com.blog.pwrwpw.member.dto.MemberRequest;
