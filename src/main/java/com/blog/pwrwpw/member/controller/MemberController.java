@@ -22,9 +22,13 @@ public class MemberController {
     public MemberController(final MemberService memberService) {
         this.memberService = memberService;
     }
+
     @PatchMapping
-    public ResponseEntity<MemberResponse> changeMemberPassword(@JwtLogin final Member member, @RequestBody @Valid final ChangePasswordRequest changePasswordRequest) {
+    public ResponseEntity<MemberResponse> changeMemberPassword(@JwtLogin final Member member,
+                                                               @RequestBody @Valid final ChangePasswordRequest changePasswordRequest) {
         Member loginMember = memberService.changeMembersPassword(member, changePasswordRequest);
         return ResponseEntity.ok(MemberResponse.from(loginMember));
     }
+
+
 }
