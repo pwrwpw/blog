@@ -1,0 +1,39 @@
+### read board
+GET {{host}}/boards/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### create board
+POST {{host}}/boards
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "My first board",
+  "content": "This is my first board."
+}
+
+### update board
+PUT {{host}}/boards/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Change title",
+  "content": "Change content"
+}
+
+### update fail
+PUT {{host}}/boards/2
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "title": "Change title",
+  "content": "Change content"
+}
+
+### delete board
+DELETE {{host}}/boards/1
+Content-Type: application/json
+Authorization: Bearer {{token}}
