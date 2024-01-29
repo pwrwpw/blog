@@ -1,4 +1,4 @@
-package com.blog.pwrwpw.config;
+package com.blog.pwrwpw.global.config;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

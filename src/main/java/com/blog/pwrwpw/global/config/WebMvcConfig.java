@@ -1,9 +1,8 @@
 
-package com.blog.pwrwpw.config;
+package com.blog.pwrwpw.global.config;
 
 import com.blog.pwrwpw.auth.filter.AuthorizationFilter;
 import com.blog.pwrwpw.auth.provider.JwtTokenProvider;
-import jakarta.servlet.Filter;
 
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;

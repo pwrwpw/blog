@@ -1,4 +1,4 @@
-package com.blog.pwrwpw.config;
+package com.blog.pwrwpw.global.config;
 
 import com.blog.pwrwpw.auth.login.JwtLoginResolver;
 import com.blog.pwrwpw.auth.service.JwtAuthService;
