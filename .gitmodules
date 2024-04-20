@@ -1,0 +1,6 @@
+[submodule "src/main/resources/blog-config"]
+	path = src/main/resources/blog-config
+	url = git@github.com:pwrwpw/blog-config.git
+[submodule "src/main/resources/config"]
+	path = src/main/resources/config
+	url = git@github.com:pwrwpw/blog-config.git
